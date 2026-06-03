@@ -236,7 +236,7 @@ const ProfilePageClient = ({
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        GitHub Profile
+                        {user.githubUrl}
                       </a>
                     </div>
                   )}
