@@ -5,7 +5,7 @@ import { toggleFollow } from '@/app/actions/user.action';
 import { SignInButton, useUser } from '@clerk/nextjs';
 import { format } from "date-fns";
 
-import { CalendarIcon, EditIcon, FileTextIcon, HeartIcon, LinkIcon, MapPinIcon } from 'lucide-react';
+import { CalendarIcon, EditIcon, FileTextIcon, HeartIcon, LinkIcon, MapPinIcon, Github } from 'lucide-react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import PostCard from './PostCard';
@@ -49,6 +49,7 @@ type ModalUser = {
   name?: string;
   bio?: string;
   image?: string;
+  githubUrl?: string;
 };
 const ProfilePageClient = ({
   isFollowing: initialIsFollowing,
@@ -66,6 +67,7 @@ const ProfilePageClient = ({
     bio: user.bio || "",
     location: user.location || "",
     website: user.website || "",
+    githubUrl: user.githubUrl || "",
   });
   const isOwnProfile =
     currentUser?.username === user.username ||
@@ -220,6 +222,24 @@ const ProfilePageClient = ({
                       </a>
                     </div>
                   )}
+                  {user.githubUrl && (
+                    <div className="flex items-center text-muted-foreground">
+                      <Github className="size-4 mr-2" />
+
+                      <a
+                        href={
+                          user.githubUrl.startsWith("http")
+                            ? user.githubUrl
+                            : `https://${user.githubUrl}`
+                        }
+                        className="hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        GitHub Profile
+                      </a>
+                    </div>
+                  )}
                   <div className="flex items-center text-muted-foreground">
                     <CalendarIcon className="size-4 mr-2" />
                     Joined {formattedDate}
@@ -329,6 +349,20 @@ const ProfilePageClient = ({
                     setEditForm({ ...editForm, website: e.target.value })
                   }
                   placeholder="Your personal website"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>GitHub Profile</Label>
+                <Input
+                  name="githubUrl"
+                  value={editForm.githubUrl}
+                  onChange={(e) =>
+                    setEditForm({
+                      ...editForm,
+                      githubUrl: e.target.value,
+                    })
+                  }
+                  placeholder="https://github.com/yourusername"
                 />
               </div>
             </div>

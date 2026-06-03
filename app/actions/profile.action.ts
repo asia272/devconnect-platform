@@ -18,7 +18,9 @@ export async function getProfileByUsername(username: string) {
                 image: true,
                 location: true,
                 website: true,
+                githubUrl: true,
                 createdAt: true,
+
                 _count: {
                     select: {
                         followers: true,
@@ -168,6 +170,7 @@ export async function updateProfile(formData: FormData) {
         const bio = formData.get("bio") as string;
         const location = formData.get("location") as string;
         const website = formData.get("website") as string;
+        const githubUrl = formData.get("githubUrl") as string;
 
         const user = await prisma.user.update({
             where: { clerkId },
@@ -176,6 +179,7 @@ export async function updateProfile(formData: FormData) {
                 bio,
                 location,
                 website,
+                githubUrl
             },
         });
 
