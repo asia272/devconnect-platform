@@ -4,43 +4,43 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
 export async function syncUser() {
-  try {
-    const clerkUser = await currentUser();
-    const { userId } = await auth();
+    try {
+        const clerkUser = await currentUser();
+        const { userId } = await auth();
 
-    if (!clerkUser || !userId) return null;
+        if (!clerkUser || !userId) return null;
 
-    const email = clerkUser.emailAddresses[0].emailAddress;
+        const email = clerkUser.emailAddresses[0].emailAddress;
 
-    const dbUser = await prisma.user.upsert({
-      where: { email },
-      update: {
-        clerkId: clerkUser.id,
-        name: `${clerkUser.firstName || ""} ${clerkUser.lastName || ""}`,
-        username: clerkUser.username ?? email.split("@")[0],
-        image: clerkUser.imageUrl,
-      },
-      create: {
-        clerkId: clerkUser.id,
-        name: `${clerkUser.firstName || ""} ${clerkUser.lastName || ""}`,
-        username: clerkUser.username ?? email.split("@")[0],
-        email,
-        image: clerkUser.imageUrl,
-      },
-    });
+        const dbUser = await prisma.user.upsert({
+            where: { email },
+            update: {
+                clerkId: clerkUser.id,
+                name: `${clerkUser.firstName || ""} ${clerkUser.lastName || ""}`,
+                username: clerkUser.username ?? email.split("@")[0],
+                image: clerkUser.imageUrl,
+            },
+            create: {
+                clerkId: clerkUser.id,
+                name: `${clerkUser.firstName || ""} ${clerkUser.lastName || ""}`,
+                username: clerkUser.username ?? email.split("@")[0],
+                email,
+                image: clerkUser.imageUrl,
+            },
+        });
 
-    return dbUser;
-  } catch (error) {
-    console.log("syncUser failed:", error);
+        return dbUser;
+    } catch (error) {
+        console.log("syncUser failed:", error);
 
-    return null;
-  }
+        return null;
+    }
 }
 export async function getUserByClerkId(clerkId: string) {
 
     return await prisma.user.findUnique({
         where: {
-            clerkId:clerkId
+            clerkId: clerkId
         }, include: {
             _count: {
                 select:
@@ -48,24 +48,25 @@ export async function getUserByClerkId(clerkId: string) {
                     followers: true,
                     following: true,
                     posts: true,
+
                 }
             }
         }
     })
 }
 export async function getDbUserId() {
-  try {
-    const { userId: clerkId } = await auth();
+    try {
+        const { userId: clerkId } = await auth();
 
-    if (!clerkId) return null;
+        if (!clerkId) return null;
 
-    const user = await getUserByClerkId(clerkId);
+        const user = await getUserByClerkId(clerkId);
 
-    return user?.id || null;
-  } catch (error) {
-    console.log("getDbUserId error:", error);
-    return null;
-  }
+        return user?.id || null;
+    } catch (error) {
+        console.log("getDbUserId error:", error);
+        return null;
+    }
 }
 export async function getRandomUsers() {
     try {
@@ -158,6 +159,6 @@ export async function toggleFollow(targetUserId: string) {
 
         console.log("error in toggleFollow", error)
         return { success: false, error: "Error toggling follow" }
-        
+
     }
 }

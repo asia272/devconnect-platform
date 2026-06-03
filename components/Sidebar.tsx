@@ -47,15 +47,7 @@ const Sidebar = async () => {
                                     followersCount={dbUser._count.followers}
                                     followingCount={dbUser._count.following}
                                 />
-                                {/* <div>
-                                    <p className="font-medium">{dbUser._count.following}</p>
-                                    <p className="text-xs text-muted-foreground">Following</p>
-                                </div>
-                                <Separator orientation="vertical" />
-                                <div>
-                                    <p className="font-medium">{dbUser._count.followers}</p>
-                                    <p className="text-xs text-muted-foreground">Followers</p>
-                                </div> */}
+
                             </div>
                             <Separator className="my-4" />
                         </div>
@@ -73,6 +65,26 @@ const Sidebar = async () => {
                                     </a>
                                 ) : (
                                     "No website"
+                                )}
+                            </div>
+                            <div className="flex items-center text-muted-foreground">
+                                <LinkIcon className="w-4 h-4 mr-2 shrink-0" />
+
+                                {dbUser?.githubUrl ? (
+                                    <a
+                                        href={
+                                            dbUser.githubUrl.startsWith("http")
+                                                ? dbUser.githubUrl
+                                                : `https://${dbUser.githubUrl}`
+                                        }
+                                        className="hover:underline truncate"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {dbUser.githubUrl}
+                                    </a>
+                                ) : (
+                                    "No GitHub"
                                 )}
                             </div>
                         </div>
