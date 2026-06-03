@@ -5,7 +5,7 @@ import { toggleFollow } from '@/app/actions/user.action';
 import { SignInButton, useUser } from '@clerk/nextjs';
 import { format } from "date-fns";
 
-import { CalendarIcon, EditIcon, FileTextIcon, HeartIcon, LinkIcon, MapPinIcon, Github } from 'lucide-react';
+import { CalendarIcon, EditIcon, FileTextIcon, HeartIcon, LinkIcon, MapPinIcon } from 'lucide-react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import PostCard from './PostCard';
@@ -224,7 +224,7 @@ const ProfilePageClient = ({
                   )}
                   {user.githubUrl && (
                     <div className="flex items-center text-muted-foreground">
-                      <Github className="size-4 mr-2" />
+                      <LinkIcon className="size-4 mr-2" />
 
                       <a
                         href={
