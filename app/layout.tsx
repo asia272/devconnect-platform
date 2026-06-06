@@ -3,6 +3,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "stream-chat-react/dist/css/index.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Navbar from "@/components/Navbar";
@@ -10,6 +11,7 @@ import Sidebar from "@/components/Sidebar";
 import { Toaster } from "react-hot-toast";
 import AuthHydrationFix from "@/components/AuthHydrationFix";
 import AuthGate from "@/components/AuthGate";
+import { ChatProvider } from "@/components/provider/ChatProvider";
 
 
 const geistSans = Geist({
@@ -40,7 +42,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default  function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -49,33 +51,36 @@ export default  function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <AuthHydrationFix />
+          <ChatProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <AuthHydrationFix />
 
-            {/*  AUTH GATE ADDED HERE */}
-            <AuthGate>
-              <div className="min-h-screen">
-                <Navbar />
+              {/*  AUTH GATE ADDED HERE */}
+              <AuthGate>
+                <div className="min-h-screen">
+                  <Navbar />
 
-                <main className="mx-auto max-w-7xl px-4">
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <div className="hidden lg:block lg:col-span-3">
-                      <Sidebar />
+                  <main className="mx-auto max-w-7xl px-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                      <div className="hidden lg:block lg:col-span-3">
+                        <Sidebar />
+                      </div>
+
+                      <div className="lg:col-span-9">{children}</div>
                     </div>
+                  </main>
+                </div>
+              </AuthGate>
 
-                    <div className="lg:col-span-9">{children}</div>
-                  </div>
-                </main>
-              </div>
-            </AuthGate>
+              <Toaster />
+            </ThemeProvider>
+          </ChatProvider>
 
-            <Toaster />
-          </ThemeProvider>
           <SpeedInsights />
           <Analytics />
         </body>
