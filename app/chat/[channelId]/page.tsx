@@ -10,14 +10,20 @@ import {
     MessageList,
     Thread,
     Window,
+
 } from "stream-chat-react";
 import { Smile, SendHorizonal } from "lucide-react";
 import { useChatClient } from "@/components/provider/ChatProvider";
+import EmojiPicker, {
+    EmojiClickData,
+} from "emoji-picker-react";
 
 export default function ChatPage() {
     const params = useParams();
     const client = useChatClient();
     const [message, setMessage] = useState("");
+    const [showEmojiPicker, setShowEmojiPicker] =
+        useState(false);
     const [channel, setChannel] = useState<any>(null);
 
     useEffect(() => {
@@ -34,14 +40,13 @@ export default function ChatPage() {
                         watch: true,
                         state: true,
                         presence: true,
-
-
                         read: true,
                     }
                 );
                 await ch.watch();
-
+                await ch.markRead();
                 if (isMounted) {
+
                     setChannel(ch);
                 }
             } catch (err) {
@@ -64,6 +69,8 @@ export default function ChatPage() {
                 text: message,
             });
 
+            await channel.markRead();
+
             setMessage("");
         } catch (error) {
             console.error(error);
@@ -76,6 +83,7 @@ export default function ChatPage() {
             id?: string;
             name?: string;
             online?: boolean;
+            image?: string;
         };
     };
 
@@ -91,7 +99,13 @@ export default function ChatPage() {
     if (!client || !channel) {
         return <div className="p-10">Loading chat...</div>;
     }
-
+    const onEmojiClick = (
+        emojiData: EmojiClickData
+    ) => {
+        setMessage(
+            (prev) => prev + emojiData.emoji
+        );
+    };
     return (
         <div className="max-w-5xl mx-auto">
             <div className="rounded-xl border bg-card overflow-hidden">
@@ -103,9 +117,22 @@ export default function ChatPage() {
 
                             <div className="border-b p-4 flex items-center justify-between">
                                 <div>
-                                    <h2 className="font-semibold">
-                                        {otherMember?.user?.name || "Chat"}
-                                    </h2>
+                                    <div className="flex items-center gap-3">
+                                        <img
+                                            src={otherMember?.user?.image}
+                                            className="w-10 h-10 rounded-full"
+                                        />
+
+                                        <div>
+                                            <h2>{otherMember?.user?.name}</h2>
+
+                                            <p>
+                                                {isOnline
+                                                    ? "Online"
+                                                    : "Offline"}
+                                            </p>
+                                        </div>
+                                    </div>
 
                                     <p className="text-sm text-muted-foreground">
                                         {isOnline ? "🟢 Online" : "⚫ Offline"}
@@ -114,16 +141,31 @@ export default function ChatPage() {
                             </div>
 
                             {/* MESSAGES (includes typing UI internally) */}
+
                             <div className="h-[65vh] overflow-y-auto px-2">
                                 <MessageList />
                             </div>
 
                             {/* INPUT */}
                             <div className="border-t bg-background p-4">
-                                <div className="flex items-center gap-3">
-                                    <button className="text-muted-foreground hover:text-foreground">
+                                <div className="relative flex items-center gap-3">
+                                    <button
+                                        onClick={() =>
+                                            setShowEmojiPicker(
+                                                !showEmojiPicker
+                                            )
+                                        }
+                                        className="text-muted-foreground hover:text-foreground text-xl"
+                                    >
                                         😊
                                     </button>
+                                    {showEmojiPicker && (
+                                        <div className="absolute bottom-16 left-4 z-50">
+                                            <EmojiPicker
+                                                onEmojiClick={onEmojiClick}
+                                            />
+                                        </div>
+                                    )}
 
                                     <input
                                         onKeyDown={(e) => {

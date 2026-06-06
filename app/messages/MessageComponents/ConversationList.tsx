@@ -2,30 +2,42 @@
 
 import { useEffect, useState } from "react";
 import ConversationItem from "./ConversationItem";
+import { useChatClient } from "@/components/provider/ChatProvider";
 
 export default function ConversationList() {
     const [channels, setChannels] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const client = useChatClient();
 
+    const loadChannels = async () => {
+        try {
+            const res = await fetch(
+                "/api/chat/channels"
+            );
+
+            const data = await res.json();
+
+            setChannels(data.channels);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
     useEffect(() => {
-        const loadChannels = async () => {
-            try {
-                const res = await fetch(
-                    "/api/chat/channels"
-                );
-
-                const data = await res.json();
-
-                setChannels(data.channels);
-            } catch (err) {
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         loadChannels();
     }, []);
+    useEffect(() => {
+        if (!client) return;
+        const refresh = () => {
+            loadChannels();
+        };
+        client.on("message.new", refresh);
+
+        return () => {
+            client.off("message.new", refresh);
+        };
+    }, [client]);
 
     if (loading) {
         return (

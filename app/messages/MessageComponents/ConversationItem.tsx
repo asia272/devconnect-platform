@@ -33,7 +33,11 @@ export default function ConversationItem({
                     <h3 className="font-semibold truncate">
                         {user?.name || "Unknown"}
                     </h3>
-
+                    {channel.unreadCount > 0 && (
+                        <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+                            {channel.unreadCount}
+                        </span>
+                    )}
                     {channel.lastMessageAt && (
                         <span className="text-xs text-muted-foreground">
                             {formatDistanceToNow(
@@ -43,10 +47,22 @@ export default function ConversationItem({
                         </span>
                     )}
                 </div>
+                <div className="flex justify-between items-center">
+                    <p className="text-sm text-muted-foreground truncate">
+                        {channel.lastMessage || "No messages yet"}
+                    </p>
 
-                <p className="text-sm text-muted-foreground truncate">
-                    {channel.lastMessage || "No messages yet"}
-                </p>
+                    <span className="text-xs text-muted-foreground">
+                        {channel.lastMessageAt
+                            ? new Date(
+                                channel.lastMessageAt
+                            ).toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                            })
+                            : ""}
+                    </span>
+                </div>
             </div>
         </Link>
     );

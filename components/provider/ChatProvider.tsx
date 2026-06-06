@@ -36,7 +36,7 @@ export function ChatProvider({
 
                 await chatClient.connectUser(
                     {
-                        id: data.user.id,   // ✅ Prisma ID
+                        id: data.user.id,   //  Prisma ID
                         name: data.user.name,
                         image: data.user.image,
                     },
