@@ -44,7 +44,7 @@ export async function GET() {
             last_message_at: -1,
         },
         {
-            watch: false,
+            watch: true,
             state: true,
         }
     );

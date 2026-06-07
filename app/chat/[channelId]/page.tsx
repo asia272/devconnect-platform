@@ -44,7 +44,7 @@ export default function ChatPage() {
                     }
                 );
                 await ch.watch();
-                await ch.markRead();
+
                 if (isMounted) {
 
                     setChannel(ch);
@@ -60,7 +60,12 @@ export default function ChatPage() {
             isMounted = false;
         };
     }, [client, params.channelId]);
+    //Mark as read  msg
+    useEffect(() => {
+        if (!channel) return;
 
+        channel.markRead();
+    }, [channel]);
 
 
 
@@ -110,10 +115,11 @@ export default function ChatPage() {
                                             <div>
                                                 <h2>{otherMember?.user?.name}</h2>
 
-                                                <p>
-                                                    {isOnline
-                                                        ? "Online"
-                                                        : "Offline"}
+                                                <p
+                                                    className={`text-xs font-normal ${isOnline ? "text-green-500" : "text-gray-500"
+                                                        }`}
+                                                >
+                                                    {isOnline ? "Online" : "Offline"}
                                                 </p>
                                             </div>
                                         </div>
