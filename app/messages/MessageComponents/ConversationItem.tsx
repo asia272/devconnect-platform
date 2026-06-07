@@ -1,5 +1,6 @@
 "use client";
 
+import { Check, CheckCheck, CheckCheckIcon } from "lucide-react";
 import Link from "next/link";
 export default function ConversationItem({
     client,
@@ -10,41 +11,42 @@ export default function ConversationItem({
     client: any;
     typingUser?: string;
 }) {
-    const members = Object.values(channel.state.members || {});
-    const otherMember: any = members.find(
-        (m: any) => m.user?.id !== client?.userID
-    );
 
-    const otherUserId = otherMember?.user?.id;
-
-    const user = otherMember?.user;
 
 
     const lastMsg = channel.lastMessage();
-
     const lastMessage = lastMsg?.text || "";
-
     const messageTime = lastMsg?.created_at
         ? new Date(lastMsg.created_at).toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
         })
-        : "";
+        : ""
+    const members = Object.values(channel.state.members || {});
+    const otherMember: any = members.find(
+        (m: any) => m.user?.id !== client?.userID
+    );
+    const user = otherMember?.user;
+    const otherUserId = otherMember?.user?.id;
+
     const isRead = (() => {
         if (!lastMsg || !otherUserId) return false;
 
-        const lastMessageTime = new Date(lastMsg.created_at).getTime();
+        const readState = channel.state.read?.[otherUserId];
 
-        const readData = channel.state.read?.[otherUserId];
+        if (!readState?.last_read) return false;
 
-        const lastReadTime = readData?.last_read
-            ? new Date(readData.last_read).getTime()
-            : 0;
-
-        return lastReadTime >= lastMessageTime;
+        return (
+            new Date(readState.last_read).getTime() >=
+            new Date(lastMsg.created_at).getTime()
+        );
     })();
+
+
+    const isMyMessage = lastMsg?.user?.id === client?.userID;
+    const isDelivered = isMyMessage;
     const unreadCount = channel.countUnread();
-    console.log(unreadCount)
+
     return (
         <Link
             href={`/chat/${channel.id}`}
@@ -90,22 +92,31 @@ export default function ConversationItem({
                     {/* LEFT SIDE: Tick + message */}
                     <div className="flex items-center gap-1 min-w-0">
                         {/* Read / sent tick */}
-                        {lastMsg && (
-                            <span
-                                className={`text-[11px] shrink-0 ${isRead ? "text-blue-500" : "text-gray-400"
-                                    }`}
-                            >
-                                {isRead ? "✓✓" : "✓"}
+                        {lastMsg && isMyMessage && (
+                            <span className="flex items-center justify-center text-[12px] leading-none">
+                                {/* SENT */}
+                                {!isDelivered && (
+                                    <Check className="w-3.5 h-3.5 text-gray-400" />
+                                )}
+
+                                {/* DELIVERED (default in Stream) */}
+                                {isDelivered && !isRead && (
+                                    <CheckCheck className="w-3.5 h-3.5 text-gray-400" />
+                                )}
+
+                                {/* READ */}
+                                {isRead && (
+                                    <CheckCheck className="w-3.5 h-3.5 text-blue-500" />
+                                )}
                             </span>
                         )}
-
                         {/* Message */}
                         <p
                             className={`text-sm truncate ${typingUser
-                                    ? "text-green-500 font-medium"
-                                    : unreadCount > 0
-                                        ? "text-black dark:text-white font-medium"
-                                        : "text-gray-500"
+                                ? "text-green-500 font-medium"
+                                : unreadCount > 0
+                                    ? "text-black dark:text-white font-medium"
+                                    : "text-gray-500"
                                 }`}
                         >
                             {typingUser
