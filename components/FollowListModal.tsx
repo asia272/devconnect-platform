@@ -48,7 +48,7 @@ const FollowListModal: FC<FollowListModalProps> = ({
                                 className="flex items-center gap-3 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md"
                             >
                                 <Link
-                                    href={`/profile/${user.username}`}
+                                    href={`/profile/${user?.id}`}
                                     className="font-semibold hover:underline"
                                 >
                                     <img
@@ -59,7 +59,7 @@ const FollowListModal: FC<FollowListModalProps> = ({
                                 </Link>
                                 <div className="flex-1">
                                     <Link
-                                        href={`/profile/${user.username}`}
+                                        href={`/profile/${user?.id}`}
                                         className="font-semibold hover:underline"
                                     >
                                         {user.name?.trim() || user.username}

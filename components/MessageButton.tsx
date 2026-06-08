@@ -1,17 +1,29 @@
 "use client";
 
 import { useStartChat } from "@/app/hooks/useStartChat";
+import { Button } from "./ui/button";
+import { Loader2 } from "lucide-react";
 
 export default function MessageButton({ userId }: { userId: string }) {
     const { startChat, loadingUserId } = useStartChat();
 
+    const isLoading = loadingUserId === userId;
+
     return (
-        <button
+        <Button
+            size={"sm"}
             onClick={() => startChat(userId)}
-            disabled={loadingUserId === userId}
-            className="bg-blue-500 text-white px-3 py-1 rounded text-xs disabled:opacity-50 cursor-pointer"
+            disabled={isLoading}
+            className="cursor-pointer"
+
         >
-            {loadingUserId === userId ? "Opening..." : "Message"}
-        </button>
+            {isLoading ? (
+                <span className="flex items-center gap-1">
+                    <Loader2 className="size-4 animate-spin" />
+                </span>
+            ) : (
+                "Message"
+            )}
+        </Button>
     );
 }

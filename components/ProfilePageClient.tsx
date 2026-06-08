@@ -190,6 +190,7 @@ const ProfilePageClient = ({
                   <div className="grid grid-cols-2 gap-2 w-full mt-4">
                     {/* Follow Button */}
                     <Button
+                      size={"sm"}
                       className='cursor-pointer'
                       onClick={handleFollow}
                       disabled={isUpdatingFollow}
@@ -198,7 +199,7 @@ const ProfilePageClient = ({
                       {isFollowing ? "Unfollow" : "Follow"}
                     </Button>
 
-                    {/* 💬 Message Button */}
+                    {/*  Message Button */}
                     <MessageButton userId={user.id} />
                   </div>
                 )}
