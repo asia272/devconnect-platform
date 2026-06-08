@@ -4,8 +4,11 @@ import { Avatar, AvatarImage } from "./ui/avatar";
 import Link from "next/link";
 import FollowButton from "./FollowButton";
 
+import MessageButton from "./MessageButton";
+
 async function WhotoFolow() {
     const users = await getRandomUsers();
+
 
     if (users?.length === 0) return null;
     return (
@@ -37,7 +40,10 @@ async function WhotoFolow() {
                                     <p className="text-muted-foreground">{user._count.followers} followers</p>
                                 </div>
                             </div>
-                            <FollowButton userId={user.id} />
+                            <div className="flex items-center gap-2">
+                                <MessageButton userId={user.id} />
+                                <FollowButton userId={user.id} />
+                            </div>
                         </div>
                     ))}
                 </div>

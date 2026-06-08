@@ -145,7 +145,6 @@ export default function ChatPage() {
                                                 </h2>
                                             </Link>
 
-
                                             <p
                                                 className={`text-xs ${isOnline
                                                     ? "text-green-500"

@@ -1,6 +1,6 @@
 "use client"
 
-import { getProfileByUsername, getUserAllPosts, getUserFollowers, getUserFollowing, updateProfile } from '@/app/actions/profile.action';
+import { getProfileByUserId, getUserAllPosts, getUserFollowers, getUserFollowing, updateProfile } from '@/app/actions/profile.action';
 import { toggleFollow } from '@/app/actions/user.action';
 import { SignInButton, useUser } from '@clerk/nextjs';
 import { format } from "date-fns";
@@ -20,10 +20,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Textarea } from './ui/textarea';
 import FollowListModal from './FollowListModal';
 import FollowStats from './FollowStats';
+import MessageButton from "./MessageButton";
 
 
-
-type User = Awaited<ReturnType<typeof getProfileByUsername>>
+type User = Awaited<ReturnType<typeof getProfileByUserId>>
 
 type Posts = Awaited<ReturnType<typeof getUserAllPosts>>;
 
@@ -187,14 +187,20 @@ const ProfilePageClient = ({
                     Edit Profile
                   </Button>
                 ) : (
-                  <Button
-                    className="w-full mt-4"
-                    onClick={handleFollow}
-                    disabled={isUpdatingFollow}
-                    variant={isFollowing ? "outline" : "default"}
-                  >
-                    {isFollowing ? "Unfollow" : "Follow"}
-                  </Button>
+                  <div className="grid grid-cols-2 gap-2 w-full mt-4">
+                    {/* Follow Button */}
+                    <Button
+                      className='cursor-pointer'
+                      onClick={handleFollow}
+                      disabled={isUpdatingFollow}
+                      variant={isFollowing ? "outline" : "default"}
+                    >
+                      {isFollowing ? "Unfollow" : "Follow"}
+                    </Button>
+
+                    {/* 💬 Message Button */}
+                    <MessageButton userId={user.id} />
+                  </div>
                 )}
 
                 {/* LOCATION & WEBSITE */}
