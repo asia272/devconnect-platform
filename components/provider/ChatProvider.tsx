@@ -1,5 +1,6 @@
 "use client";
 
+
 import {
     createContext,
     useContext,
@@ -39,6 +40,7 @@ export function ChatProvider({
                         id: data.user.id,   //  Prisma ID
                         name: data.user.name,
                         image: data.user.image,
+                        username: data.user.username,
                     },
                     data.token
                 );

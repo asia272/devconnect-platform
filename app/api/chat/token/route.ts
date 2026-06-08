@@ -38,6 +38,7 @@ export async function GET() {
         id: dbUser.id,
         name: dbUser.name || dbUser.username,
         image: dbUser.image || "",
+        username: dbUser.username,
     });
 
     const token = serverClient.createToken(dbUser.id);
@@ -48,6 +49,7 @@ export async function GET() {
             id: dbUser.id,
             name: dbUser.name || dbUser.username,
             image: dbUser.image || "",
+            username: dbUser.username,
         },
     });
 }

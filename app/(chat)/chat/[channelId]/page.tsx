@@ -14,7 +14,7 @@ import {
     MessageComposer,
 } from "stream-chat-react";
 
-
+import { useRouter } from "next/navigation";
 import { useChatClient } from "@/components/provider/ChatProvider";
 
 import { WithComponents } from "stream-chat-react";
@@ -22,10 +22,23 @@ import { WithComponents } from "stream-chat-react";
 import CustomTypingIndicator from "@/components/chat/TypingIndicator";
 
 
+type ChannelMember = {
+    user?: {
+        id?: string;
+        name?: string;
+        online?: boolean;
+        username?: string;
+        image?: string;
+
+    };
+};
+
+
+
 export default function ChatPage() {
     const params = useParams();
     const client = useChatClient();
-
+    const router = useRouter();
     const [channel, setChannel] = useState<any>(null);
 
     useEffect(() => {
@@ -69,17 +82,6 @@ export default function ChatPage() {
         channel.markRead();
     }, [channel]);
 
-
-
-    type ChannelMember = {
-        user?: {
-            id?: string;
-            name?: string;
-            online?: boolean;
-            image?: string;
-        };
-    };
-
     const members: ChannelMember[] = channel
         ? (Object.values(channel.state.members) as ChannelMember[])
         : [];
@@ -92,6 +94,20 @@ export default function ChatPage() {
     if (!client || !channel) {
         return <div className="p-10">Loading chat...</div>;
     }
+
+    const goToProfile = (e: React.MouseEvent) => {
+        e.stopPropagation();
+
+        const username =
+            otherMember?.user?.username ??
+            otherMember?.user?.name?.split(" ")[0];
+
+        if (!username) return;
+
+        router.push(`/profile/${username}`);
+    };
+
+
 
 
     return (
@@ -119,16 +135,22 @@ export default function ChatPage() {
 
                                         <img
                                             src={otherMember?.user?.image}
-                                            className="w-10 h-10 rounded-full"
+                                            className="w-10 h-10 rounded-full cursor-pointer"
+                                            onClick={goToProfile}
                                         />
 
                                         <div>
-                                            <h2>{otherMember?.user?.name}</h2>
+                                            <h2
+                                                onClick={goToProfile}
+                                                className="cursor-pointer hover:underline"
+                                            >
+                                                {otherMember?.user?.name}
+                                            </h2>
 
                                             <p
                                                 className={`text-xs ${isOnline
-                                                        ? "text-green-500"
-                                                        : "text-gray-500"
+                                                    ? "text-green-500"
+                                                    : "text-gray-500"
                                                     }`}
                                             >
                                                 {isOnline ? "Online" : "Offline"}
