@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react'
-import { getUserNotifications, markAsReadNotifications } from '../actions/notification.action'
+
+import { getUserNotifications, markAsReadNotifications } from '@/app/actions/notification.action';
 import toast from 'react-hot-toast';
 import NotificationsSkeleton from '@/components/NotificationsSkeleton';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
