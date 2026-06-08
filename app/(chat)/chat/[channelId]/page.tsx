@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import {
     Chat,
     Channel,
@@ -92,9 +93,10 @@ export default function ChatPage() {
         return <div className="p-10">Loading chat...</div>;
     }
 
+
     return (
-        <div className="max-w-5xl mx-auto">
-            <div className="rounded-xl border bg-card overflow-hidden">
+        <div className="h-full">
+            <div className="h-full border-l bg-card overflow-hidden flex flex-col">
                 <Chat client={client} theme="messaging light">
                     <WithComponents
                         overrides={{
@@ -106,26 +108,32 @@ export default function ChatPage() {
                             <Window>
 
                                 <div className="border-b p-4 flex items-center justify-between">
-                                    <div>
-                                        <div className="flex items-center gap-3">
-                                            <img
-                                                src={otherMember?.user?.image}
-                                                className="w-10 h-10 rounded-full"
-                                            />
+                                    <div className="flex items-center gap-3">
 
-                                            <div>
-                                                <h2>{otherMember?.user?.name}</h2>
+                                        <Link
+                                            href="/messages"
+                                            className="md:hidden"
+                                        >
+                                            <ArrowLeft className="w-5 h-5" />
+                                        </Link>
 
-                                                <p
-                                                    className={`text-xs font-normal ${isOnline ? "text-green-500" : "text-gray-500"
-                                                        }`}
-                                                >
-                                                    {isOnline ? "Online" : "Offline"}
-                                                </p>
-                                            </div>
+                                        <img
+                                            src={otherMember?.user?.image}
+                                            className="w-10 h-10 rounded-full"
+                                        />
+
+                                        <div>
+                                            <h2>{otherMember?.user?.name}</h2>
+
+                                            <p
+                                                className={`text-xs ${isOnline
+                                                        ? "text-green-500"
+                                                        : "text-gray-500"
+                                                    }`}
+                                            >
+                                                {isOnline ? "Online" : "Offline"}
+                                            </p>
                                         </div>
-
-
                                     </div>
                                 </div>
 
@@ -134,14 +142,9 @@ export default function ChatPage() {
                                 <div className="h-[65vh] overflow-y-auto px-2">
                                     <MessageList />
                                 </div>
-
-
                                 <MessageComposer />
-
                             </Window>
-
                             <Thread />
-
                         </Channel>
                     </WithComponents>
 

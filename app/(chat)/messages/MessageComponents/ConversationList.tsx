@@ -12,24 +12,7 @@ export default function ConversationList() {
 
     const client = useChatClient();
 
-    // const loadChannels = async () => {
-    //     try {
-    //         const res = await fetch("/api/chat/channels");
-    //         const data = await res.json();
 
-    //         const sorted = data.channels.sort(
-    //             (a: any, b: any) =>
-    //                 new Date(b.lastMessageAt || 0).getTime() -
-    //                 new Date(a.lastMessageAt || 0).getTime()
-    //         );
-
-    //         setChannels(sorted);
-    //     } catch (err) {
-    //         console.error(err);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
 
     // Load channels once
     const loadChannels = async () => {
@@ -45,7 +28,7 @@ export default function ConversationList() {
         );
 
         setChannels([...channels]);
-        setLoading(false); //  IMPORTANT FIX
+        setLoading(false);
     };
     useEffect(() => {
         if (!client) return;

@@ -1,7 +1,9 @@
 "use client";
 
 import { Check, CheckCheck, CheckCheckIcon } from "lucide-react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+
 export default function ConversationItem({
     client,
     channel,
@@ -12,7 +14,7 @@ export default function ConversationItem({
     typingUser?: string;
 }) {
 
-
+    const router = useRouter();
 
     const lastMsg = channel.lastMessage();
     const lastMessage = lastMsg?.text || "";
@@ -48,9 +50,9 @@ export default function ConversationItem({
     const unreadCount = channel.countUnread();
 
     return (
-        <Link
-            href={`/chat/${channel.id}`}
-            className={`flex items-center gap-3 px-4 py-3 border-b hover:bg-muted transition ${unreadCount > 0
+        <div
+            onClick={() => router.push(`/chat/${channel.id}`)}
+            className={`flex items-center gap-3 px-4 py-3 border-b hover:bg-muted transition cursor-pointer ${unreadCount > 0
                 ? "bg-green-50/50 dark:bg-green-950/10"
                 : ""
                 }`}
@@ -134,6 +136,6 @@ export default function ConversationItem({
                 </div>
 
             </div>
-        </Link>
+        </div>
     );
 }
