@@ -5,11 +5,14 @@ import { getDbUserId } from "./user.action";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
-export async function getProfileByUsername(username: string) {
+export async function getProfileByUserId(id: string) {
     try {
+        if (!id) {
+            throw new Error("User ID is required");
+        }
         const user = await prisma.user.findUnique({
             where: {
-                username,
+                id,
             }, select: {
                 id: true,
                 username: true,

@@ -27,9 +27,7 @@ type ChannelMember = {
         id?: string;
         name?: string;
         online?: boolean;
-        username?: string;
         image?: string;
-
     };
 };
 
@@ -95,17 +93,9 @@ export default function ChatPage() {
         return <div className="p-10">Loading chat...</div>;
     }
 
-    const goToProfile = (e: React.MouseEvent) => {
-        e.stopPropagation();
-
-        const username =
-            otherMember?.user?.username ??
-            otherMember?.user?.name?.split(" ")[0];
-
-        if (!username) return;
-
-        router.push(`/profile/${username}`);
-    };
+    // const goToProfile = (e: React.MouseEvent) => {
+    //     e.stopPropagation();
+    // }
 
 
 
@@ -136,15 +126,16 @@ export default function ChatPage() {
                                         <img
                                             src={otherMember?.user?.image}
                                             className="w-10 h-10 rounded-full cursor-pointer"
-                                            onClick={goToProfile}
+
                                         />
 
                                         <div>
                                             <h2
-                                                onClick={goToProfile}
+
                                                 className="cursor-pointer hover:underline"
                                             >
                                                 {otherMember?.user?.name}
+
                                             </h2>
 
                                             <p

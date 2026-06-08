@@ -110,9 +110,10 @@ function MobileNavbar({ user }: { user: any }) {
                   asChild
                 >
                   <Link
-                    href={`/profile/${user?.username ?? user?.email.split("@")[0]}`}
+                    href={`/profile/${user?.id}`}
                   >
                     <UserIcon className="w-4 h-4" />
+                    {user.id}
                     Profile
                   </Link>
                 </Button>

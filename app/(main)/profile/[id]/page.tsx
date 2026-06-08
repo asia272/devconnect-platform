@@ -1,15 +1,21 @@
-import { getProfileByUsername, getUserAllPosts, getUserLikedPosts, isFollowing } from "@/app/actions/profile.action";
+import { getProfileByUserId, getUserAllPosts, getUserLikedPosts, isFollowing } from "@/app/actions/profile.action";
 import { getDbUserId } from "@/app/actions/user.action";
 import ProfilePageClient from "@/components/ProfilePageClient";
 import { currentUser } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 
-const ProfilePage = async ({ params }: { params: { username: string } }) => {
-    const param = await params
-    const user = await getProfileByUsername(param.username)
-    if (!user) notFound();
+const ProfilePage = async ({
+    params,
+}: {
+    params: { id: string };
+}) => {
 
-const clerkUser = await currentUser();
+    const { id } = await params;
+
+    const user = await getProfileByUserId(id);
+
+    if (!user) notFound();
+    const clerkUser = await currentUser();
     let dbUserId = null;
 
     if (clerkUser?.id) {
@@ -18,8 +24,8 @@ const clerkUser = await currentUser();
         } catch (error) {
             console.log("DB user not ready yet");
         }
-    } 
-    
+    }
+
     const [posts, likedPosts, isCurrentUserFollowing] = await Promise.all([
         getUserAllPosts(user.id),
         getUserLikedPosts(user.id),
@@ -27,13 +33,13 @@ const clerkUser = await currentUser();
     ])
 
     return (
-      <ProfilePageClient
-        user={user}
-        posts={posts}
-        likedPosts={likedPosts}
-        isFollowing={isCurrentUserFollowing}
-        dbUserId={dbUserId}
-      />
+        <ProfilePageClient
+            user={user}
+            posts={posts}
+            likedPosts={likedPosts}
+            isFollowing={isCurrentUserFollowing}
+            dbUserId={dbUserId}
+        />
     );
 }
 
