@@ -16,11 +16,11 @@ async function WhotoFolow() {
             <CardHeader>
                 <CardTitle>Who to Follow</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-4">
                 <div className="space-y-4">
                     {users?.map((user) => (
-                        <div key={user.id} className="flex gap-2 items-center justify-between ">
-                            <div className="flex items-center gap-1">
+                        <div key={user.id} className="flex  items-center justify-between">
+                            <div className="flex flex-1 items-center gap-1">
                                 <Link
                                     href={`/profile/${user?.id}`}
                                 >
