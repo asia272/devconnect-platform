@@ -4,7 +4,7 @@ import Link from "next/link";
 import CreateDropdown from "./CreateDropdown";
 import DesktopNavbar from "./DesktopNavbar";
 import MobileNavbar from "./MobileNavbar";
-import { Code2Icon } from "lucide-react";
+import { Code2Icon, InboxIcon, MessageCircle } from "lucide-react";
 
 const Navbar = async () => {
   // Get current Clerk user
@@ -52,6 +52,13 @@ const Navbar = async () => {
             {clerkUser && (
               <div className="flex items-center">
                 <CreateDropdown />
+                <Link
+                  href="/messages"
+                  className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-muted"
+                >
+                  <InboxIcon className="w-4 h-4" />
+                  Inbox
+                </Link>
               </div>
             )}
 

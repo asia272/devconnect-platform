@@ -20,6 +20,7 @@ import { WithComponents } from "stream-chat-react";
 
 import CustomTypingIndicator from "@/components/chat/TypingIndicator";
 
+
 export default function ChatPage() {
     const params = useParams();
     const client = useChatClient();
@@ -136,6 +137,7 @@ export default function ChatPage() {
 
 
                                 <MessageComposer />
+
                             </Window>
 
                             <Thread />

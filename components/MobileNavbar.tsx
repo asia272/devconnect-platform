@@ -26,11 +26,11 @@ function MobileNavbar({ user }: { user: any }) {
 
 
 
-const pathname = usePathname();
+  const pathname = usePathname();
 
-useEffect(() => {
-  setShowMobileMenu(false);
-}, [pathname]);
+  useEffect(() => {
+    setShowMobileMenu(false);
+  }, [pathname]);
 
   return (
     <div className="flex md:hidden items-center space-x-2">
