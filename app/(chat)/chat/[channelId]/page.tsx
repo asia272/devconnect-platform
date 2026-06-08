@@ -122,21 +122,29 @@ export default function ChatPage() {
                                         >
                                             <ArrowLeft className="w-5 h-5" />
                                         </Link>
+                                        <Link
+                                            href={`/profile/${otherMember?.user?.id}`}
+                                        >
+                                            <img
+                                                src={otherMember?.user?.image}
+                                                className="w-10 h-10 rounded-full cursor-pointer"
 
-                                        <img
-                                            src={otherMember?.user?.image}
-                                            className="w-10 h-10 rounded-full cursor-pointer"
+                                            />
+                                        </Link>
 
-                                        />
 
                                         <div>
-                                            <h2
-
-                                                className="cursor-pointer hover:underline"
+                                            <Link
+                                                href={`/profile/${otherMember?.user?.id}`}
                                             >
-                                                {otherMember?.user?.name}
+                                                <h2
+                                                    className="cursor-pointer hover:underline"
+                                                >
+                                                    {otherMember?.user?.name}
 
-                                            </h2>
+                                                </h2>
+                                            </Link>
+
 
                                             <p
                                                 className={`text-xs ${isOnline

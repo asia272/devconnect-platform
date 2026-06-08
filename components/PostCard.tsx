@@ -164,7 +164,9 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
       <CardContent className="p-4 sm:p-6">
         <div className="space-y-4">
           <div className="flex space-x-3 sm:space-x-4">
-            <Link href={`/profile/${post.author.username}`}>
+            <Link
+              href={`/profile/${post.author?.id}`}
+            >
               <Avatar className="size-8 sm:w-10 sm:h-10">
                 <AvatarImage src={post.author.image ?? "/avatar.png"} />
               </Avatar>
@@ -175,7 +177,7 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
                 <div className="flex flex-col sm:flex-row  sm:space-x-2 truncat">
                   <div className="mr-4">
                     <Link
-                      href={`/profile/${post.author.username}`}
+                      href={`/profile/${post.author?.id}`}
                       className="font-semibold truncate"
                     >
                       {post.author.name || post.author.username}
@@ -222,9 +224,8 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
             {/* DESCRIPTION */}
             {post.description && (
               <p
-                className={`text-sm text-muted-foreground leading-relaxed ${
-                  expanded ? "" : "line-clamp-3"
-                }`}
+                className={`text-sm text-muted-foreground leading-relaxed ${expanded ? "" : "line-clamp-3"
+                  }`}
               >
                 {post.description || "No description provided"}
               </p>
@@ -319,11 +320,10 @@ function PostCard({ post, dbUserId }: { post: Post; dbUserId: string | null }) {
               <Button
                 variant="ghost"
                 size="sm"
-                className={`text-muted-foreground gap-2 ${
-                  hasLiked
-                    ? "text-red-500 hover:text-red-600"
-                    : "hover:text-red-500"
-                }`}
+                className={`text-muted-foreground gap-2 ${hasLiked
+                  ? "text-red-500 hover:text-red-600"
+                  : "hover:text-red-500"
+                  }`}
                 onClick={() => handleLike(post.id)}
               >
                 {hasLiked ? (

@@ -113,7 +113,6 @@ function MobileNavbar({ user }: { user: any }) {
                     href={`/profile/${user?.id}`}
                   >
                     <UserIcon className="w-4 h-4" />
-                    {user.id}
                     Profile
                   </Link>
                 </Button>

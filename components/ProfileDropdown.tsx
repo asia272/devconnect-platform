@@ -54,8 +54,9 @@ function ProfileDropdown({ user }: { user: any }) {
 
         {/* Profile */}
         <DropdownMenuItem asChild>
+
           <Link
-            href={`/profile/${user?.username ?? user?.email?.split("@")[0]}`}
+            href={`/profile/${user?.id}`}
             className="flex items-center gap-2 cursor-pointer"
           >
             <UserIcon className="w-4 h-4" />
