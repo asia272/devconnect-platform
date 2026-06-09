@@ -1,76 +1,62 @@
-# 🚀 DevConnect – Developer Community Platform
+# 🚀 DevConnect
 
-A modern full-stack **Developer Social Platform** built with **Next.js**, where developers can **share projects, posts, connect with others, and grow together**.
-
-DevConnect is designed to go beyond traditional social media — focusing on **coding, projects, collaboration, and feedback from the developer community**.
-
----
+A modern full-stack developer social platform built with Next.js where developers can share posts, showcase projects, connect with others, and communicate through real-time messaging.
 
 ## 🌐 Live Demo
 
-[🚀 View Live Application](https://devconnect-platform-six.vercel.app/)
+https://devconnect-platform-six.vercel.app/
 
----
+## ✨ Features
 
-## 📌 Features
-
-- 🔐 Secure Authentication (Clerk)
-- 👤 Developer Profiles
-- 📝 Create & Share Posts (coding thoughts, updates, ideas)
-- 📂 Project Sharing (developer-focused content)
-- 💬 Comments System with real-time interaction
-- ❤️ Like / Unlike Posts
-- 👥 Follow / Unfollow Developers
-- 👀 Follow Status Indicator (shows if you are following a user in profile & sidebar)
-- 📊 Followers & Following Modal System (click to view full lists)-
-- 🔔 Notifications System
-- 🖼️ Image Upload Support
-- 🧠 Auto Tech Stack Detection (React, Next.js, etc.)
-- 🎨 Light / Dark Mode Support with dynamic logo switching
-- ⚡ Optimized UX with modern UI interactions
-- 📱 Fully Responsive Design
-
----
+* 🔐 Authentication with Clerk
+* 👤 Developer Profiles
+* 📝 Create, Like & Comment on Posts
+* 👥 Follow / Unfollow Developers
+* 🔔 Real-Time Notifications
+* 💬 Real-Time Chat with Stream
+* 📩 Direct Messaging & Inbox
+* 📊 Unread Message Tracking
+* 🖼️ Image Upload Support
+* 🧠 Auto Tech Stack Detection
+* 🌙 Light / Dark Mode
+* 📱 Fully Responsive Design
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- Next.js (App Router)
-- React
-- Tailwind CSS
-- ShadCN UI
-- Lucide React Icons
+**Frontend**
 
-### Backend
-- Next.js Server Actions
-- Prisma ORM
-- PostgreSQL Database
+* Next.js
+* React
+* Tailwind CSS
+* ShadCN UI
 
-### Authentication
-- Clerk
+**Backend**
 
-### UI/UX Enhancements
-- React Hot Toast (notifications)
-- Theme-based UI (Light/Dark mode)
-- Custom branding system (DevConnect logo variants)
+* Next.js Server Actions
+* Prisma ORM
+* PostgreSQL
 
----
+**Authentication**
+
+* Clerk
+
+**Real-Time Communication**
+
+* Stream Chat
+* Stream Webhooks
 
 ## 🎯 Vision
 
-DevConnect is built for developers who want to:
-- Share real-world projects
-- Connect with other developers
-- Get feedback on their work
-- Build a strong coding network
-- Learn and grow in a dev-focused environment
-
----
+DevConnect helps developers share projects, build connections, communicate in real time, and grow within a developer-focused community.
 
 ## 🚀 Future Improvements
 
-- 🧑‍💻 AI-powered code feedback
-- 📊 Developer skill analytics
-- 💬 Real-time chat system
-- 🏆 Developer leaderboard system
-- 🌍 Global developer discovery feed
+* AI-Powered Code Feedback
+* Developer Skill Analytics
+* Developer Leaderboards
+* Global Developer Discovery
+* Collaboration Workspaces
+
+---
+
+Built with ❤️ for developers.
