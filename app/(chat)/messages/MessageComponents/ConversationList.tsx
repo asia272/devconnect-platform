@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import ConversationItem from "./ConversationItem";
 import { useChatClient } from "@/components/provider/ChatProvider";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function ConversationList() {
     const [channels, setChannels] = useState<any[]>([]);
@@ -89,15 +90,18 @@ export default function ConversationList() {
     }
 
     return (
-        <div className="w-full">
-            {channels.map((channel) => (
-                <ConversationItem
-                    key={channel.id}
-                    channel={channel}
-                    client={client}
-                    typingUser={typingChannels[channel.id]}
-                />
-            ))}
-        </div>
+        <ScrollArea className="h-full w-full">
+            <div className="w-full">
+                {channels.map((channel) => (
+                    <ConversationItem
+                        key={channel.id}
+                        channel={channel}
+                        client={client}
+                        typingUser={typingChannels[channel.id]}
+                    />
+                ))}
+            </div>
+        </ScrollArea>
+
     );
 }
