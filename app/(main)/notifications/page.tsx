@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AvatarImage, Avatar } from '@/components/ui/avatar';
 import { formatDistanceToNow } from 'date-fns';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { HeartIcon, MessageCircleIcon, UserPlusIcon } from 'lucide-react';
+import { HeartIcon, MessageCircleIcon, MessageSquareIcon, UserPlusIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from "next/navigation";
 import { MessageSquare } from "lucide-react";
@@ -25,11 +25,13 @@ const getNotificationIcon = (type: string) => {
     case "FOLLOW":
       return <UserPlusIcon className="size-4 text-green-500" />;
     case "MESSAGE":
-      return <MessageSquare className="size-4 text-blue-600" />;
+      return <MessageCircleIcon className="size-4 text-blue-600" />;
     default:
       return null;
   }
 };
+
+
 
 const NotificationPage = () => {
   const [notifications, setNotifications] = useState<Notification[]>([])
@@ -85,7 +87,7 @@ const NotificationPage = () => {
                 >
                   {/* LEFT SIDE */}
                   <div className="flex gap-3 flex-1 min-w-0">
-                    <Link href={`/profile/${notification.creator.username}`}>
+                    <Link href={`/profile/${notification.creator.id}`}>
                       <Avatar className="size-8 mt-1">
                         <AvatarImage
                           src={notification.creator.image ?? "/avatar.png"}
@@ -112,9 +114,9 @@ const NotificationPage = () => {
                                 onClick={() => {
                                   router.push(`/chat/${notification.channelId}`);
                                 }}
-                                className="cursor-pointer p-3 rounded-md bg-blue-100 hover:bg-blue-200 transition"
+                                className="cursor-pointer  hover:underline transition"
                               >
-                                💬 New message from {notification.creator.name || "user"}
+                                New message from <b>{notification.creator.name || "user"}</b> — click to view
                               </div>
                             ) :
                               notification.type === "FOLLOW"
