@@ -10,6 +10,8 @@ import { formatDistanceToNow } from 'date-fns';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { HeartIcon, MessageCircleIcon, UserPlusIcon } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from "next/navigation";
+import { MessageSquare } from "lucide-react";
 
 type Notifications = Awaited<ReturnType<typeof getUserNotifications>>
 type Notification = NonNullable<Notifications>[number];
@@ -22,17 +24,18 @@ const getNotificationIcon = (type: string) => {
       return <MessageCircleIcon className="size-4 text-blue-500" />;
     case "FOLLOW":
       return <UserPlusIcon className="size-4 text-green-500" />;
+    case "MESSAGE":
+      return <MessageSquare className="size-4 text-blue-600" />;
     default:
       return null;
   }
 };
 
-
 const NotificationPage = () => {
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [isLoading, setIsLoading] = useState(true);
 
-
+  const router = useRouter();
   // When this page render then automtically fetch all notification
   //  and mark as read if marks as unread
   useEffect(() => {
@@ -103,11 +106,22 @@ const NotificationPage = () => {
                               notification.creator.username}
                           </Link>
 
-                          {notification.type === "FOLLOW"
-                            ? "started following you"
-                            : notification.type === "LIKE"
-                              ? "liked your post"
-                              : "commented on your post"}
+                          {
+                            notification.type === "MESSAGE" ? (
+                              <div
+                                onClick={() => {
+                                  router.push(`/chat/${notification.channelId}`);
+                                }}
+                                className="cursor-pointer p-3 rounded-md bg-blue-100 hover:bg-blue-200 transition"
+                              >
+                                💬 New message from {notification.creator.name || "user"}
+                              </div>
+                            ) :
+                              notification.type === "FOLLOW"
+                                ? "started following you"
+                                : notification.type === "LIKE"
+                                  ? "liked your post"
+                                  : "commented on your post"}
                         </span>
                       </div>
 

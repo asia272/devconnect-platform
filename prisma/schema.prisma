@@ -87,6 +87,7 @@ model Notification {
   id        String           @id @default(cuid())
   userId    String
   creatorId String
+  channelId String?
   type      NotificationType
   read      Boolean          @default(false)
   postId    String?
@@ -104,6 +105,7 @@ enum NotificationType {
   LIKE
   COMMENT
   FOLLOW
+  MESSAGE
 }
 
 enum PostType {
