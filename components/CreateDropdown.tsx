@@ -29,7 +29,7 @@ const CreateDropdown = () => {
       {/* MAIN BUTTON */}
       <Button
         variant="outline"
-        className="flex items-center gap-1.5 sm:gap-2 rounded-full px-3 sm:px-4 h-9 sm:h-10 cursor-pointer text-sm"
+        className="flex items-center gap-1.5 sm:gap-2 rounded px-3 sm:px-4 h-9 sm:h-10 cursor-pointer text-sm"
         onClick={() => setOpen((prev) => !prev)}
       >
         <Plus className="w-4 h-4" />
@@ -40,9 +40,8 @@ const CreateDropdown = () => {
       <div
         className={`absolute right-0 mt-2 w-52 sm:w-56 rounded-xl border bg-background shadow-lg z-50
     transition-all duration-200 ease-out origin-top-right
-    ${
-      open ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
-    }`}
+    ${open ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+          }`}
       >
         <div className="p-2">
           <Link
