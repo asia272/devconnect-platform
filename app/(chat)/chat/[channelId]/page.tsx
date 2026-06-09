@@ -20,7 +20,8 @@ import { useChatClient } from "@/components/provider/ChatProvider";
 import { WithComponents } from "stream-chat-react";
 
 import CustomTypingIndicator from "@/components/chat/TypingIndicator";
-
+import { markMessageNotificationsAsRead } from "@/app/actions/notification.action";
+import { getDbUserId } from "@/app/actions/user.action";
 
 type ChannelMember = {
     user?: {
@@ -77,9 +78,17 @@ export default function ChatPage() {
     useEffect(() => {
         if (!channel) return;
 
-        channel.markRead();
-    }, [channel]);
+        const markRead = async () => {
+            channel.markRead();
 
+            const userId = await getDbUserId();
+            if (!userId) return;
+
+            await markMessageNotificationsAsRead(userId);
+        };
+
+        markRead();
+    }, [channel]);
     const members: ChannelMember[] = channel
         ? (Object.values(channel.state.members) as ChannelMember[])
         : [];
@@ -92,10 +101,6 @@ export default function ChatPage() {
     if (!client || !channel) {
         return <div className="p-10">Loading chat...</div>;
     }
-
-    // const goToProfile = (e: React.MouseEvent) => {
-    //     e.stopPropagation();
-    // }
 
 
 

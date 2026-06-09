@@ -98,3 +98,16 @@ export async function getUnreadMessageCount() {
     },
   });
 }
+
+export async function markMessageNotificationsAsRead(userId: string) {
+  return await prisma.notification.updateMany({
+    where: {
+      userId,
+      type: "MESSAGE",
+      read: false,
+    },
+    data: {
+      read: true,
+    },
+  });
+}
