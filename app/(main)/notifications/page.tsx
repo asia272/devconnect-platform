@@ -101,7 +101,7 @@ const NotificationPage = () => {
 
                         <span className="leading-snug">
                           <Link
-                            href={`/profile/${notification.creator.username}`}
+                            href={`/profile/${notification.creator.id}`}
                             className="font-bold hover:underline mr-1"
                           >
                             {notification.creator.name?.trim() ||
