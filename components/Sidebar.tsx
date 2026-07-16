@@ -23,10 +23,8 @@ const Sidebar = async () => {
             <Card>
                 <CardContent className="pt-6">
                     <div className="flex flex-col items-center text-center">
-                        <Link
-                            href={`/profile/${dbUser.username}`}
-                            className="flex flex-col items-center justify-center"
-                        >
+                        <div
+                            className="flex flex-col items-center justify-center" >
                             <Avatar className="w-20 h-20 border-2 ">
                                 <AvatarImage src={dbUser.image || "/avatar.png"} />
                             </Avatar>
@@ -35,7 +33,7 @@ const Sidebar = async () => {
                                 <h3 className="font-semibold">{dbUser.name}</h3>
                                 <p className="text-sm text-muted-foreground">{dbUser.username}</p>
                             </div>
-                        </Link>
+                        </div>
 
                         {dbUser.bio && <p className="mt-3 text-sm text-muted-foreground">{dbUser.bio}</p>}
 
