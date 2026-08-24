@@ -49,6 +49,52 @@ https://devconnect-platform-six.vercel.app/
 
 DevConnect helps developers share projects, build connections, communicate in real time, and grow within a developer-focused community.
 
+
+
+---
+
+## 🔐 Environment Variables
+
+Create a `.env.local` file in the project root and add the following environment variables.
+
+### 🗄️ Database
+
+```env id="5v3qpx"
+DATABASE_URL="your_postgresql_database_url"
+```
+
+### 🔑 Clerk Authentication
+
+```env id="z8o1nv"
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="your_clerk_publishable_key"
+CLERK_SECRET_KEY="your_clerk_secret_key"
+
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL="/"
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL="/"
+```
+
+### 📤 UploadThing
+
+```env id="gk6j3s"
+UPLOADTHING_TOKEN="your_uploadthing_token"
+```
+
+### 🎥 Stream
+
+```env id="j8x2rd"
+NEXT_PUBLIC_STREAM_API_KEY="your_stream_api_key"
+STREAM_API_SECRET="your_stream_api_secret"
+```
+
+
+
+---
+
+
+
+
+
+
 ## 🚀 Future Improvements
 
 * AI-Powered Code Feedback
