@@ -6,6 +6,10 @@ A modern full-stack developer social platform built with Next.js where developer
 
 https://devconnect-platform-six.vercel.app/
 
+## 📸 Project Preview
+
+![Project Preview](./public/social-media-application.png)
+
 ## ✨ Features
 
 * 🔐 Authentication with Clerk
